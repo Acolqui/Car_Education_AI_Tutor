@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>AI Car Tutor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        input, select, textarea, button {
+            width: 100%;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            padding: 10px;
+        }
+        #response {
+            white-space: pre-wrap;
+            border: 1px solid #ccc;
+            padding: 15px;
+            min-height: 120px;
+        }
+    </style>
+</head>
+<body>
+    <h1>AIED for Car Education</h1>
+
+    <label>Skill Level</label>
+    <select id="skill_level">
+        <option value="beginner">Beginner</option>
+        <option value="intermediate">Intermediate</option>
+        <option value="advanced">Advanced</option>
+    </select>
+
+    <label>Car Year</label>
+    <input id="car_year" placeholder="e.g. 2018">
+
+    <label>Car Make</label>
+    <input id="car_make" placeholder="e.g. Toyota">
+
+    <label>Car Model</label>
+    <input id="car_model" placeholder="e.g. Camry">
+
+    <label>Your Question</label>
+    <textarea id="question" rows="6" placeholder="What does the check engine light mean?"></textarea>
+
+    <button onclick="askTutor()">Ask Tutor</button>
+
+    <h2>Answer</h2>
+    <div id="response"></div>
+
+    <script>
+        async function askTutor() {
+            const payload = {
+                skill_level: document.getElementById("skill_level").value,
+                car_year: document.getElementById("car_year").value,
+                car_make: document.getElementById("car_make").value,
+                car_model: document.getElementById("car_model").value,
+                question: document.getElementById("question").value
+            };
+
+            const res = await fetch("/ask", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+
+            const data = await res.json();
+            document.getElementById("response").innerText = data.answer;
+        }
+    </script>
+</body>
+</html>
