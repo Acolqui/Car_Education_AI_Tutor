@@ -15,7 +15,7 @@ DEFAULT_STUDENT_STATE = {
     "completed_modules": []
 }
 
-#JSON handling functions
+#JSON handling functions *******************
 def load_json(path, default_data=None):
     if not path.exists():
         if default_data is None:
@@ -52,7 +52,7 @@ def get_quiz_by_id(curriculum, quiz_id):
             return quiz
     return None
 
-# AI feedback functions
+# AI feedback functions *******************
 def check_keywords_in_response(ai_response):
     text = ai_response.lower()
 
