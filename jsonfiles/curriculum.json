@@ -1,46 +1,142 @@
 {
-  "topics": [
+  "level": "Beginner_Curriculum",
+  "modules": [
     {
-      "id": "car_buttons",
-      "title": "Car Buttons",
-      "level": "beginner",
-      "prerequisites": [],
-      "content": "Common car buttons include the hazard button, lock button, window controls, windshield wiper controls, and climate controls.",
-      "quiz": {
-        "question": "What does the hazard light button do?",
-        "answer": "It turns on all signal lights to warn other drivers.",
-        "accepted_keywords": ["warn", "signal", "lights", "emergency"],
-        "hint": "It is used to alert other drivers that your car may be stopped or in trouble."
-      },
-      "next_topic": "dashboard_lights"
+      "id": 1,
+      "title": "Car Lights Symbol in Dashboard",
+      "imageDIR": "/images/",
+      "lessons": [
+        {
+          "id": 1,
+          "title": "What Dashboard Symbols Are",
+          "content": "Dashboard symbols are warning or information lights that appear on a car's instrument panel. They help drivers understand the condition of the vehicle and whether something needs attention."
+        },
+        {
+          "id": 2,
+          "title": "Why Dashboard Lights Matter",
+          "content": "Dashboard lights can warn the driver about safety issues, maintenance needs, or system activity. Learning these symbols helps drivers respond correctly and avoid damage."
+        },
+        {
+          "id": 3,
+          "title": "Colors of Dashboard Lights",
+          "content": "Red lights usually mean stop or urgent danger. Yellow or orange lights usually mean caution or service needed soon. Green or blue lights usually show that a feature is currently active."
+        },
+        {
+          "id": 4,
+          "title": "Common Symbol Examples",
+          "content": "Common dashboard symbols include the check engine light, oil pressure light, battery warning light, brake warning light, and coolant temperature light."
+        }
+      ]
     },
     {
-      "id": "dashboard_lights",
-      "title": "Dashboard Warning Lights",
-      "level": "beginner",
-      "prerequisites": ["car_buttons"],
-      "content": "Dashboard warning lights tell you about issues such as low oil pressure, tire pressure, battery or charging problems, and engine problems.",
-      "quiz": {
-        "question": "What does the battery warning light usually suggest?",
-        "answer": "It usually suggests a charging system problem.",
-        "accepted_keywords": ["charging", "alternator", "battery", "system"],
-        "hint": "It does not always mean the battery itself is dead. Think about the system that keeps the battery charged."
-      },
-      "next_topic": "basic_maintenance"
+      "id": 2,
+      "title": "Emergency Dashboard Lights",
+      "imageDIR": "/images/",
+      "lessons": [
+        {
+          "id": 1,
+          "title": "Oil Pressure Warning Light",
+          "content": "The oil pressure warning light usually means the engine does not have enough oil pressure. This is serious because low oil pressure can quickly damage the engine."
+        },
+        {
+          "id": 2,
+          "title": "Brake Warning Light",
+          "content": "The brake warning light may mean the parking brake is on, brake fluid is low, or there is a brake system problem. Brake problems should be taken seriously right away."
+        },
+        {
+          "id": 3,
+          "title": "Coolant Temperature Warning Light",
+          "content": "The coolant temperature warning light means the engine is overheating. If this happens, the driver should pull over safely and let the engine cool down."
+        },
+        {
+          "id": 4,
+          "title": "Battery Warning Light",
+          "content": "The battery warning light usually points to a charging system issue. The battery, alternator, or wiring may not be working properly."
+        }
+      ]
     },
     {
-      "id": "basic_maintenance",
-      "title": "Basic Maintenance",
-      "level": "beginner",
-      "prerequisites": ["dashboard_lights"],
-      "content": "Basic maintenance includes checking oil, tire pressure, coolant, windshield washer fluid, and battery condition.",
-      "quiz": {
-        "question": "Name one thing you should check regularly as part of basic car maintenance.",
-        "answer": "Examples include oil, tire pressure, coolant, washer fluid, or battery condition.",
-        "accepted_keywords": ["oil", "tire", "pressure", "coolant", "washer", "battery"],
-        "hint": "Think about fluids or tire condition."
-      },
-      "next_topic": "basic_maintenance"
+      "id": 3,
+      "title": "Misc Dashboard Lights",
+      "imageDIR": "/images/",
+      "lessons": [
+        {
+          "id": 1,
+          "title": "Check Engine Light",
+          "content": "The check engine light means the car has detected a problem in the engine or emissions system. A steady light usually means service is needed soon. A flashing light may mean a more serious problem."
+        },
+        {
+          "id": 2,
+          "title": "Low Fuel Light",
+          "content": "The low fuel light means the fuel level is getting low and the driver should refuel soon."
+        },
+        {
+          "id": 3,
+          "title": "Tire Pressure Warning Light",
+          "content": "The tire pressure warning light means one or more tires may have low pressure. Driving with low tire pressure can reduce safety and fuel efficiency."
+        },
+        {
+          "id": 4,
+          "title": "Seat Belt Reminder Light",
+          "content": "The seat belt reminder light tells the driver or passenger to fasten their seat belt."
+        }
+      ]
+    }
+  ],
+  "quizzes": [
+    {
+      "id": 1,
+      "title": "Basic Dashboard Symbols Quiz",
+      "questions": [
+        {
+          "question": "What do dashboard symbols help a driver understand?",
+          "answer": "They help a driver understand the condition of the vehicle."
+        },
+        {
+          "question": "What color dashboard light usually means urgent danger?",
+          "answer": "Red."
+        },
+        {
+          "question": "What color dashboard light usually shows a feature is active?",
+          "answer": "Green or blue."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Emergency Dashboard Lights Quiz",
+      "questions": [
+        {
+          "question": "Why is the oil pressure warning light serious?",
+          "answer": "Because low oil pressure can quickly damage the engine."
+        },
+        {
+          "question": "What should you do if the coolant temperature light comes on?",
+          "answer": "Pull over safely and let the engine cool down."
+        },
+        {
+          "question": "What can the brake warning light mean?",
+          "answer": "It can mean the parking brake is on, brake fluid is low, or there is a brake system problem."
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Misc Dashboard Lights Quiz",
+      "questions": [
+        {
+          "question": "What does the check engine light usually mean?",
+          "answer": "It means the car detected a problem in the engine or emissions system."
+        },
+        {
+          "question": "What does the low fuel light mean?",
+          "answer": "It means the fuel level is low and the car needs fuel soon."
+        },
+        {
+          "question": "What does the tire pressure warning light tell the driver?",
+          "answer": "It tells the driver that one or more tires may have low pressure."
+        }
+      ]
     }
   ]
 }

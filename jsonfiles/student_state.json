@@ -1,11 +1,14 @@
 {
-  "current_topic": "car_buttons",
-  "mastery": {
-    "car_buttons": 0.0,
-    "dashboard_lights": 0.0,
-    "basic_maintenance": 0.0
+  "current_module": 1,
+  "quiz_mastery": {
+    "1": 0.0,
+    "2": 0.0,
+    "3": 0.0
   },
-  "lesson_stage": "quiz",
-  "attempts_on_current_question": 0,
-  "last_topic_studied": "car_buttons"
+  "completed_modules": [
+    1
+  ],
+  "mastery": {
+    "1": 0.95
+  }
 }
