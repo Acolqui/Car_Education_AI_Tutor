@@ -1,74 +1,226 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AI Car Tutor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Education AI Tutor</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            max-width: 800px;
+            max-width: 900px;
             margin: 40px auto;
+            padding: 0 20px;
+            background: #f7f7f7;
+            color: #222;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
             padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
         }
-        input, select, textarea, button {
+
+        textarea {
             width: 100%;
-            margin-top: 10px;
-            margin-bottom: 15px;
-            padding: 10px;
-        }
-        #response {
-            white-space: pre-wrap;
+            min-height: 100px;
+            padding: 12px;
+            font-size: 16px;
             border: 1px solid #ccc;
-            padding: 15px;
-            min-height: 120px;
+            border-radius: 8px;
+            resize: vertical;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 16px;
+            margin-top: 10px;
+            margin-right: 10px;
+            font-size: 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: #2563eb;
+            color: white;
+        }
+
+        button.secondary {
+            background: #6b7280;
+        }
+
+        button.danger {
+            background: #dc2626;
+        }
+
+        .label {
+            font-weight: bold;
+            margin-top: 12px;
+            display: block;
+        }
+
+        .output-box {
+            background: #f3f4f6;
+            border-radius: 8px;
+            padding: 12px;
+            white-space: pre-wrap;
+            margin-top: 8px;
+        }
+
+        .status {
+            font-size: 14px;
+            color: #555;
+            margin-top: 8px;
         }
     </style>
 </head>
 <body>
-    <h1>AIED for Car Education</h1>
+    <h1>Car Education AI Tutor</h1>
+    <p>This tutor teaches car topics, checks answers, and gives feedback.</p>
 
-    <label>Skill Level</label>
-    <select id="skill_level">
-        <option value="beginner">Beginner</option>
-        <option value="intermediate">Intermediate</option>
-        <option value="advanced">Advanced</option>
-    </select>
+    <div class="card">
+        <label class="label" for="message">Your message or answer</label>
+        <textarea id="message" placeholder="Type start, or answer the tutor's question..."></textarea>
+        <div>
+            <button onclick="sendMessage()">Send</button>
+            <button class="secondary" onclick="loadProgress()">View Progress</button>
+            <button class="danger" onclick="resetProgress()">Reset Progress</button>
+        </div>
+        <div class="status" id="status">Ready.</div>
+    </div>
 
-    <label>Car Year</label>
-    <input id="car_year" placeholder="e.g. 2018">
+    <div class="card">
+        <h2>Tutor Response</h2>
+        <div><strong>Action:</strong></div>
+        <div class="output-box" id="actionBox">None yet.</div>
 
-    <label>Car Make</label>
-    <input id="car_make" placeholder="e.g. Toyota">
+        <div><strong>Message:</strong></div>
+        <div class="output-box" id="messageBox">Waiting for your first message.</div>
 
-    <label>Car Model</label>
-    <input id="car_model" placeholder="e.g. Camry">
+        <div><strong>Question:</strong></div>
+        <div class="output-box" id="questionBox">No question yet.</div>
 
-    <label>Your Question</label>
-    <textarea id="question" rows="6" placeholder="What does the check engine light mean?"></textarea>
+        <div><strong>Correct:</strong></div>
+        <div class="output-box" id="correctBox">N/A</div>
+    </div>
 
-    <button onclick="askTutor()">Ask Tutor</button>
+    <div class="card">
+        <h2>Planner Update</h2>
+        <div class="output-box" id="plannerBox">No planner update yet.</div>
+    </div>
 
-    <h2>Answer</h2>
-    <div id="response"></div>
+    <div class="card">
+        <h2>Student State</h2>
+        <div class="output-box" id="stateBox">No state loaded yet.</div>
+    </div>
 
     <script>
-        async function askTutor() {
-            const payload = {
-                skill_level: document.getElementById("skill_level").value,
-                car_year: document.getElementById("car_year").value,
-                car_make: document.getElementById("car_make").value,
-                car_model: document.getElementById("car_model").value,
-                question: document.getElementById("question").value
-            };
+        async function sendMessage() {
+            const messageInput = document.getElementById("message");
+            const message = messageInput.value.trim();
+            const status = document.getElementById("status");
 
-            const res = await fetch("/ask", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload)
-            });
+            if (!message) {
+                status.textContent = "Please type a message first.";
+                return;
+            }
 
-            const data = await res.json();
-            document.getElementById("response").innerText = data.answer;
+            status.textContent = "Sending...";
+
+            try {
+                const response = await fetch("/chat", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ message })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    status.textContent = data.error || "Something went wrong.";
+                    return;
+                }
+
+                const tutorReply = data.tutor_reply || {};
+                const plannerUpdate = data.planner_update || {};
+                const studentState = data.student_state || {};
+
+                document.getElementById("actionBox").textContent =
+                    tutorReply.action ?? "None";
+
+                document.getElementById("messageBox").textContent =
+                    tutorReply.message ?? "No message returned.";
+
+                document.getElementById("questionBox").textContent =
+                    tutorReply.question ?? "No question.";
+
+                document.getElementById("correctBox").textContent =
+                    tutorReply.correct === null || tutorReply.correct === undefined
+                        ? "N/A"
+                        : String(tutorReply.correct);
+
+                document.getElementById("plannerBox").textContent =
+                    JSON.stringify(plannerUpdate, null, 2);
+
+                document.getElementById("stateBox").textContent =
+                    JSON.stringify(studentState, null, 2);
+
+                status.textContent = "Response received.";
+                messageInput.value = "";
+            } catch (error) {
+                status.textContent = "Error connecting to the server.";
+            }
+        }
+
+        async function loadProgress() {
+            const status = document.getElementById("status");
+            status.textContent = "Loading progress...";
+
+            try {
+                const response = await fetch("/progress");
+                const data = await response.json();
+
+                document.getElementById("stateBox").textContent =
+                    JSON.stringify(data, null, 2);
+
+                status.textContent = "Progress loaded.";
+            } catch (error) {
+                status.textContent = "Could not load progress.";
+            }
+        }
+
+        async function resetProgress() {
+            const status = document.getElementById("status");
+            status.textContent = "Resetting progress...";
+
+            try {
+                const response = await fetch("/reset", {
+                    method: "POST"
+                });
+
+                const data = await response.json();
+
+                document.getElementById("plannerBox").textContent =
+                    JSON.stringify(data, null, 2);
+
+                document.getElementById("stateBox").textContent =
+                    "Progress reset. Click View Progress to reload state.";
+
+                document.getElementById("actionBox").textContent = "None yet.";
+                document.getElementById("messageBox").textContent = "Waiting for your first message.";
+                document.getElementById("questionBox").textContent = "No question yet.";
+                document.getElementById("correctBox").textContent = "N/A";
+
+                status.textContent = "Progress reset.";
+            } catch (error) {
+                status.textContent = "Could not reset progress.";
+            }
         }
     </script>
 </body>

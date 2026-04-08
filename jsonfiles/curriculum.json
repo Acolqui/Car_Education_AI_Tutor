@@ -1,0 +1,46 @@
+{
+  "topics": [
+    {
+      "id": "car_buttons",
+      "title": "Car Buttons",
+      "level": "beginner",
+      "prerequisites": [],
+      "content": "Common car buttons include the hazard button, lock button, window controls, windshield wiper controls, and climate controls.",
+      "quiz": {
+        "question": "What does the hazard light button do?",
+        "answer": "It turns on all signal lights to warn other drivers.",
+        "accepted_keywords": ["warn", "signal", "lights", "emergency"],
+        "hint": "It is used to alert other drivers that your car may be stopped or in trouble."
+      },
+      "next_topic": "dashboard_lights"
+    },
+    {
+      "id": "dashboard_lights",
+      "title": "Dashboard Warning Lights",
+      "level": "beginner",
+      "prerequisites": ["car_buttons"],
+      "content": "Dashboard warning lights tell you about issues such as low oil pressure, tire pressure, battery or charging problems, and engine problems.",
+      "quiz": {
+        "question": "What does the battery warning light usually suggest?",
+        "answer": "It usually suggests a charging system problem.",
+        "accepted_keywords": ["charging", "alternator", "battery", "system"],
+        "hint": "It does not always mean the battery itself is dead. Think about the system that keeps the battery charged."
+      },
+      "next_topic": "basic_maintenance"
+    },
+    {
+      "id": "basic_maintenance",
+      "title": "Basic Maintenance",
+      "level": "beginner",
+      "prerequisites": ["dashboard_lights"],
+      "content": "Basic maintenance includes checking oil, tire pressure, coolant, windshield washer fluid, and battery condition.",
+      "quiz": {
+        "question": "Name one thing you should check regularly as part of basic car maintenance.",
+        "answer": "Examples include oil, tire pressure, coolant, washer fluid, or battery condition.",
+        "accepted_keywords": ["oil", "tire", "pressure", "coolant", "washer", "battery"],
+        "hint": "Think about fluids or tire condition."
+      },
+      "next_topic": "basic_maintenance"
+    }
+  ]
+}
