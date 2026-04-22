@@ -22,7 +22,7 @@ Main features:
 - Reset progress option
 - Lesson and quiz flow
 - Mastery tracking
-- AI feedback after quiz answers :contentReference[oaicite:0]{index=0}
+- AI feedback after quiz answers
 
 ### cli_app.py
 This is the **terminal version** of the tutor.
@@ -40,24 +40,21 @@ Main features:
 - Terminal-based version for testing
 - Same lesson and quiz structure as the web version
 - AI feedback in the command line
-- Mastery tracking with JSON files :contentReference[oaicite:1]{index=1}
-
-## How to Run
+- Mastery tracking with JSON files
 
 ## Requirements
 
 Make sure you have:
+- Python installed
+- Flask installed
+- OpenAI package installed
+- A valid `OPENAI_API_KEY`
+- The JSON files inside the `jsonfiles` folder
 
--Python installed
--Flask installed
--OpenAI package installed
--A valid OPENAI_API_KEY
--The JSON files inside the jsonfiles folder
+## How to Run
 
 ### Web version
 Run:
 
 ```bash
 python app.py
-or
-python cli_app.py
