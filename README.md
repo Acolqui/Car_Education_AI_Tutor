@@ -44,6 +44,16 @@ Main features:
 
 ## How to Run
 
+Requirements
+
+Make sure you have:
+
+Python installed
+Flask installed
+OpenAI package installed
+A valid OPENAI_API_KEY
+The JSON files inside the jsonfiles folder
+
 ### Web version
 Run:
 
