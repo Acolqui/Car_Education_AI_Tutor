@@ -1,227 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Car Education AI Tutor</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 0 20px;
-            background: #f7f7f7;
-            color: #222;
-        }
-
-        h1 {
-            margin-bottom: 10px;
-        }
-
-        .card {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-        }
-
-        textarea {
-            width: 100%;
-            min-height: 100px;
-            padding: 12px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            resize: vertical;
-            box-sizing: border-box;
-        }
-
-        button {
-            padding: 10px 16px;
-            margin-top: 10px;
-            margin-right: 10px;
-            font-size: 15px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            background: #2563eb;
-            color: white;
-        }
-
-        button.secondary {
-            background: #6b7280;
-        }
-
-        button.danger {
-            background: #dc2626;
-        }
-
-        .label {
-            font-weight: bold;
-            margin-top: 12px;
-            display: block;
-        }
-
-        .output-box {
-            background: #f3f4f6;
-            border-radius: 8px;
-            padding: 12px;
-            white-space: pre-wrap;
-            margin-top: 8px;
-        }
-
-        .status {
-            font-size: 14px;
-            color: #555;
-            margin-top: 8px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Car Education AI Tutor</h1>
-    <p>This tutor teaches car topics, checks answers, and gives feedback.</p>
+    <div class="container">
+        <h1>Car Education AI Tutor</h1>
 
-    <div class="card">
-        <label class="label" for="message">Your message or answer</label>
-        <textarea id="message" placeholder="Type start, or answer the tutor's question..."></textarea>
-        <div>
-            <button onclick="sendMessage()">Send</button>
-            <button class="secondary" onclick="loadProgress()">View Progress</button>
-            <button class="danger" onclick="resetProgress()">Reset Progress</button>
+        {% if message %}
+        <div class="card">
+            <div class="label">Status</div>
+            <p>{{ message }}</p>
         </div>
-        <div class="status" id="status">Ready.</div>
+        {% endif %}
+
+        {% if module %}
+        <div class="card">
+            <p class="module"><strong>Module {{ module.id }}:</strong> {{ module.title }}</p>
+        </div>
+        {% endif %}
+
+        {% if module and not quiz_started %}
+            {% if lesson %}
+            <div class="card">
+                <p class="title"><strong>{{ lesson.title }}</strong></p>
+
+                {% if lesson.imageDIR %}
+                    <img
+                        src="{{ url_for('static', filename=lesson.imageDIR.lstrip('/')) }}"
+                        alt="{{ lesson.title }}"
+                        class="lesson-image"
+                    >
+                {% endif %}
+
+                <p class="pretty_print">{{ lesson.content }}</p>
+            </div>
+
+            <div class="card">
+                <form method="POST">
+                    <div class="buttons">
+                        <button type="submit" name="action" value="next_lesson">Next Lesson</button>
+                        <button type="submit" name="action" value="reset" class="secondary">Reset Progress</button>
+                    </div>
+                </form>
+            </div>
+            {% else %}
+            <div class="card">
+                <div class="label">Lesson Complete</div>
+                <p>You finished all lessons for this module.</p>
+                <form method="POST">
+                    <div class="buttons">
+                        <button type="submit" name="action" value="start_quiz">Start Quiz</button>
+                        <button type="submit" name="action" value="reset" class="secondary">Reset Progress</button>
+                    </div>
+                </form>
+            </div>
+            {% endif %}
+        {% endif %}
+
+        {% if module and quiz_started %}
+        <div class="card">
+            <div class="label">Quiz</div>
+
+            {% if question %}
+                <p><strong>Question:</strong> {{ question.question }}</p>
+
+                <form method="POST">
+                    <label for="user_answer" class="label">Your Answer</label>
+                    <textarea
+                        id="user_answer"
+                        name="user_answer"
+                        placeholder="Type your answer here..."
+                    ></textarea>
+
+                    <div class="buttons">
+                        <button type="submit" name="action" value="submit_answer">Submit Answer</button>
+                        <button type="submit" name="action" value="reset" class="secondary">Reset Progress</button>
+                    </div>
+                </form>
+            {% else %}
+                <p>No more quiz questions are available right now.</p>
+                <form method="POST">
+                    <button type="submit" name="action" value="reset" class="secondary">Reset Progress</button>
+                </form>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        {% if quiz_started and ai_feedback %}
+        <div class="card">
+            <div class="label">AI Feedback</div>
+            <p class="ai-feedback-box">{{ ai_feedback }}</p>
+
+            {% if result is not none %}
+                <p><strong>Result:</strong> {{ result }}</p>
+            {% endif %}
+
+            {% if mastery_score is not none %}
+                <p><strong>Updated Mastery:</strong> {{ mastery_score }}</p>
+            {% endif %}
+        </div>
+        {% endif %}
+
     </div>
-
-    <div class="card">
-        <h2>Tutor Response</h2>
-        <div><strong>Action:</strong></div>
-        <div class="output-box" id="actionBox">None yet.</div>
-
-        <div><strong>Message:</strong></div>
-        <div class="output-box" id="messageBox">Waiting for your first message.</div>
-
-        <div><strong>Question:</strong></div>
-        <div class="output-box" id="questionBox">No question yet.</div>
-
-        <div><strong>Correct:</strong></div>
-        <div class="output-box" id="correctBox">N/A</div>
-    </div>
-
-    <div class="card">
-        <h2>Planner Update</h2>
-        <div class="output-box" id="plannerBox">No planner update yet.</div>
-    </div>
-
-    <div class="card">
-        <h2>Student State</h2>
-        <div class="output-box" id="stateBox">No state loaded yet.</div>
-    </div>
-
-    <script>
-        async function sendMessage() {
-            const messageInput = document.getElementById("message");
-            const message = messageInput.value.trim();
-            const status = document.getElementById("status");
-
-            if (!message) {
-                status.textContent = "Please type a message first.";
-                return;
-            }
-
-            status.textContent = "Sending...";
-
-            try {
-                const response = await fetch("/chat", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({ message })
-                });
-
-                const data = await response.json();
-
-                if (!response.ok) {
-                    status.textContent = data.error || "Something went wrong.";
-                    return;
-                }
-
-                const tutorReply = data.tutor_reply || {};
-                const plannerUpdate = data.planner_update || {};
-                const studentState = data.student_state || {};
-
-                document.getElementById("actionBox").textContent =
-                    tutorReply.action ?? "None";
-
-                document.getElementById("messageBox").textContent =
-                    tutorReply.message ?? "No message returned.";
-
-                document.getElementById("questionBox").textContent =
-                    tutorReply.question ?? "No question.";
-
-                document.getElementById("correctBox").textContent =
-                    tutorReply.correct === null || tutorReply.correct === undefined
-                        ? "N/A"
-                        : String(tutorReply.correct);
-
-                document.getElementById("plannerBox").textContent =
-                    JSON.stringify(plannerUpdate, null, 2);
-
-                document.getElementById("stateBox").textContent =
-                    JSON.stringify(studentState, null, 2);
-
-                status.textContent = "Response received.";
-                messageInput.value = "";
-            } catch (error) {
-                status.textContent = "Error connecting to the server.";
-            }
-        }
-
-        async function loadProgress() {
-            const status = document.getElementById("status");
-            status.textContent = "Loading progress...";
-
-            try {
-                const response = await fetch("/progress");
-                const data = await response.json();
-
-                document.getElementById("stateBox").textContent =
-                    JSON.stringify(data, null, 2);
-
-                status.textContent = "Progress loaded.";
-            } catch (error) {
-                status.textContent = "Could not load progress.";
-            }
-        }
-
-        async function resetProgress() {
-            const status = document.getElementById("status");
-            status.textContent = "Resetting progress...";
-
-            try {
-                const response = await fetch("/reset", {
-                    method: "POST"
-                });
-
-                const data = await response.json();
-
-                document.getElementById("plannerBox").textContent =
-                    JSON.stringify(data, null, 2);
-
-                document.getElementById("stateBox").textContent =
-                    "Progress reset. Click View Progress to reload state.";
-
-                document.getElementById("actionBox").textContent = "None yet.";
-                document.getElementById("messageBox").textContent = "Waiting for your first message.";
-                document.getElementById("questionBox").textContent = "No question yet.";
-                document.getElementById("correctBox").textContent = "N/A";
-
-                status.textContent = "Progress reset.";
-            } catch (error) {
-                status.textContent = "Could not reset progress.";
-            }
-        }
-    </script>
 </body>
 </html>

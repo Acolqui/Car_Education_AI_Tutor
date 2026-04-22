@@ -1,14 +1,11 @@
 {
   "current_module": 1,
-  "quiz_mastery": {
-    "1": 0.0,
-    "2": 0.0,
-    "3": 0.0
-  },
-  "completed_modules": [
-    1
-  ],
   "mastery": {
-    "1": 0.95
-  }
+    "1": 0.2
+  },
+  "completed_modules": [],
+  "current_lesson_index": 4,
+  "quiz_started": true,
+  "current_question_index": 1,
+  "last_feedback": "Your answer is **partly correct**.\n\nThe dashboard symbols do help the driver understand the **condition of the vehicle**, but saying they only show the **engine** is too narrow. They can warn about many systems, such as brakes, oil pressure, battery, tires, and more.\n\n**Correct answer:** They help a driver understand the condition of the vehicle."
 }

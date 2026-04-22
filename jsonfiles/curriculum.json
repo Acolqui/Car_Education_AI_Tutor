@@ -4,27 +4,30 @@
     {
       "id": 1,
       "title": "Car Lights Symbol in Dashboard",
-      "imageDIR": "/images/",
       "lessons": [
         {
           "id": 1,
           "title": "What Dashboard Symbols Are",
-          "content": "Dashboard symbols are warning or information lights that appear on a car's instrument panel. They help drivers understand the condition of the vehicle and whether something needs attention."
+          "content": "Dashboard symbols are warning or information lights that appear on a car's instrument panel. They help drivers understand the condition of the vehicle and whether something needs attention.",
+          "imageDIR": "/images/dashboard_lights1.jpg"
         },
         {
           "id": 2,
           "title": "Why Dashboard Lights Matter",
-          "content": "Dashboard lights can warn the driver about safety issues, maintenance needs, or system activity. Learning these symbols helps drivers respond correctly and avoid damage."
+          "content": "Dashboard lights can warn the driver about safety issues, maintenance needs, or system activity. Learning these symbols helps drivers respond correctly and avoid damage.",
+          "imageDIR": "/images/dashboard_lights1.jpg"
         },
         {
           "id": 3,
           "title": "Colors of Dashboard Lights",
-          "content": "Red lights usually mean stop or urgent danger. Yellow or orange lights usually mean caution or service needed soon. Green or blue lights usually show that a feature is currently active."
+          "content": "Red lights usually mean stop or urgent danger. Yellow or orange lights usually mean caution or service needed soon. Green or blue lights usually show that a feature is currently active.",
+          "imageDIR": "/images/dashboard_lights1.jpg"
         },
         {
           "id": 4,
           "title": "Common Symbol Examples",
-          "content": "Common dashboard symbols include the check engine light, oil pressure light, battery warning light, brake warning light, and coolant temperature light."
+          "content": "Common dashboard symbols include the check engine light, oil pressure light, battery warning light, brake warning light, and coolant temperature light.",
+          "imageDIR": "/images/dashboard_lights1.jpg"
         }
       ]
     },
