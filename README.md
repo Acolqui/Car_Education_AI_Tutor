@@ -59,3 +59,5 @@ Run:
 
 ```bash
 python app.py
+or
+python cli_app.py
