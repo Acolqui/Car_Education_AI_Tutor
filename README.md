@@ -46,7 +46,7 @@ Main features:
 
 Make sure you have:
 - Python installed
-- Flask installed
+- Flask installed (for the web application app.py)
 - OpenAI package installed
 - A valid `OPENAI_API_KEY`
 - The JSON files inside the `jsonfiles` folder
