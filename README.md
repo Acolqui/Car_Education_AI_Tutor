@@ -1,7 +1,5 @@
 # Car Education AI Tutor
 
-This project is a beginner-level car education tutor that uses ChatGPT through the OpenAI API. It teaches users through lessons and quizzes, then gives AI-generated feedback on quiz answers.
-
 ## Files
 
 ### app.py
